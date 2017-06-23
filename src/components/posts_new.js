@@ -5,7 +5,7 @@ import { Field, reduxForm } from 'redux-form'; // alow our component to
 
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { createPost } from '../actions/index';
+import { createPost } from '../actions';
 
 class PostsNew extends Component {
   renderField(field) { // field argument here is to wire up to
@@ -36,7 +36,10 @@ class PostsNew extends Component {
     // this === component
     // console.log(values);
     // Object {title: "sdfsdf", categories: "sdsdf", content: "sdfsf"}
-    this.props.createPost(values);
+    this.props.createPost(values, () => {
+      this.props.history.push('/'); // this function will navigate
+      // back to root(home, index)
+    });
   }
 
 
@@ -106,4 +109,4 @@ export default reduxForm({
 })(
   connect(null, { createPost })(PostsNew)
 ); // connect this Postsnew to the action createPost
-// so that we can call
+// so that we can call this.props.createPost

@@ -10,21 +10,30 @@ class PostsIndex extends Component {
   //browser DOM (it would be called after first render and it would not
   //be called if you are rendering server-side(to string)
   componentDidMount() { //
-    this.props.fetchPosts(); // 1st time render, state is {}
+    // if (!this.props) {
+      this.props.fetchPosts(); // 1st time render, state is {}
+    // }
   }
 
   renderPosts() {
     return _.map(this.props.posts, post => {
+
+      if (!post) {
+        return <div>Loading...</div>;
+      }
+
       return (
         <li className="list-group-item" key={post.id}>
-          {post.title}
+          <Link to={`/posts/${post.id}`}>
+            {post.title}
+          </Link>
         </li>
       );
     });
   }
 
   render() {
-    // console.log(this.props.posts); // an Object {1213: Object, 23423: Object}
+    // console.log("Index: ",this.props.posts); // an Object {1213: Object, 23423: Object}
     return (
       <div>
         <div className="text-xs-right">
